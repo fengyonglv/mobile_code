@@ -18,13 +18,15 @@ data_read = pd.read_table(dir_path , sep=',' ,header=None)
 # print data_read.str.contains('null')
 # print data_read == 'null'
 
+print data_read[[5]]
+
 global_start_time = time.time()
 for cow in range(data_read.shape[1]):
-    print cow
-    data_copy = data_read.iloc[:,cow]
-    if data_copy[[cow]].dtype == object :
+    data_copy = data_read[[cow]]
+    if data_read.loc[:,cow].dtype == object :
+        print cow
         data_copy[data_copy=='null'] = np.nan
-        data_read.iloc[:,cow] = data_copy
+        data_read[[cow]] = data_copy
     if cow>=4 :
         data_read[[cow]] = data_read[[cow]].astype('float')
 print data_read.dtypes
