@@ -22,7 +22,7 @@ def loadDataSet(fileName):
             lineArr.append(float(curline[i]))
         dataMat.append(lineArr)
         timeMat.append(curline[1])
-    # print fr.names
+    # print fr.names.0
     return dataMat , timeMat
 
 dir = 'D:\mobiledata\data4'
