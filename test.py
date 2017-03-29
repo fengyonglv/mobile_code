@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-
 from sklearn import preprocessing
 from sklearn.decomposition import PCA
 from sklearn.preprocessing import MinMaxScaler
@@ -15,7 +14,7 @@ def loadDataSet(fileName):
     timeMat = []
     fr = open(fileName)
     for line in fr.readlines():
-        lineArr = []
+        lineArsr = []
         curline = line.strip().split('\t')[0].split(',')
         for i in range(3,numFeat):
             if curline[i] == 'null':
