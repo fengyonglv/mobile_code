@@ -1,0 +1,60 @@
+import numpy as np
+import re
+import os
+import matplotlib.pyplot as plt
+from pandas import *
+
+
+laber = '60000/60000'
+
+def save_data(file_dir):
+    data_train_acc = []
+    data_test_acc = []
+    fr = open(file_dir)
+    for line in fr.readlines():
+        if laber in line:
+            match = re.search(r'acc: (\S+) - val', line)
+            data_train_acc.append(float(match.group(1)))
+            match = re.search(r' - val_acc: (\S+)', line)
+            data_test_acc.append(float(match.group(1)))
+    fr.close()
+    return data_train_acc , data_test_acc
+
+data_train_acc_to = []
+data_test_acc_to = []
+file_name = []
+dir = 'D:\mobiledata\minist_cnntest\minist_result'
+for file in os.listdir(dir):
+    if '.log' in str(file):
+        file_name.append(file.split('.')[0])
+        file_path = os.path.join(dir,file)
+
+        data_acc = save_data(file_path)
+        data_train_acc_to.append(data_acc[0])
+        data_test_acc_to.append(data_acc[1])
+        x = [a for a in range(1,len(data_acc[0])+1)]
+        # plt.figure()
+        # plt.plot(x, data_acc[0], color='blue', label='train_acc')
+        # plt.plot(x, data_acc[1], color='red', label='test_acc')
+        # plt.legend(loc='lower right')
+        # plt.xlabel('number_epoch')
+        # plt.ylabel('accuracy')
+        # file_before = file.split('.')[0]
+        # print file_before
+        # plt.title(file_before)
+        # plt.xlim(1,80)
+        # plt.ylim(0.98,1.0)
+        # plt.show()
+        # plt.savefig(file_before+'.jpg')
+# print np.array(data_test_acc_to).T
+# print np.array(data_train_acc_to)
+df=DataFrame(np.array(data_train_acc_to).T,columns=file_name,index=np.arange(1,81,1))
+# plt.show(df.plot())
+# print df
+# df.to_csv('data2.csv')
+df.plot()
+plt.xlabel('number_epoch')
+plt.ylabel('accuracy')
+plt.ylim(0.988,1.002)
+plt.title('model train accuracy')
+plt.show()
